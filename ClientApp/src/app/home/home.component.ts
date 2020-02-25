@@ -123,8 +123,6 @@ export class HomeComponent implements OnInit {
   loginClick() {
     const userLocal = localStorage.getItem('username');
     const passwordLocal = localStorage.getItem('password');
-    console.log(userLocal);
-    console.log(passwordLocal);
     if (userLocal !== null && passwordLocal !== null) {
       this.homeService.login(userLocal, passwordLocal).subscribe((result) => {
         this.isLogIn = true;
