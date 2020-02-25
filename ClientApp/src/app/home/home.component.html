@@ -1,0 +1,92 @@
+<ng-container *ngIf="!isLogIn; then loginTemplate; else listTemplate"></ng-container>
+<ng-template #loginTemplate>
+  <h3>Login Page</h3>
+  <hr>
+  <div style="margin-bottom: 10px;"><label style="width: 10%;">Username</label><input type="text" [(ngModel)]="username"
+      style="margin-right: 5px" placeholder="Username"></div>
+  <div style="margin-bottom: 10px;"><label style="width: 10%;">Password</label><input type="text" [(ngModel)]="password"
+      style="margin-right: 5px" placeholder="Password"></div>
+  <hr>
+  <button class="btn btn-primary" (click)="loginClick()" style="margin-right: 10px;">Login</button>
+</ng-template>
+<ng-template #listTemplate>
+  <ng-container *ngIf="isAddEmp || isUpdateEmp; then addEmpTemplate; else normalTemplate"></ng-container>
+  <ng-template #addEmpTemplate>
+    <div style="margin-bottom: 10px;">
+      <div class="row" style=" margin-bottom:10px"> <label style="width: 10%;">First Name</label><input type="text"
+          [(ngModel)]="Fname" style="margin-right: 5px" placeholder="First Name"></div>
+      <div class="row" style=" margin-bottom:10px"> <label style="width: 10%;">Last Name</label><input type="text"
+          [(ngModel)]="Lname" style="margin-right: 5px" placeholder="Last Name"></div>
+      <div class="row" style=" margin-bottom:10px"> <label style="width: 10%;">Birth Date</label><input
+          [(ngModel)]="BDate" style="margin-right: 5px" placeholder="Birth Date 1993-07-21"></div>
+      <div class="row" style=" margin-bottom:10px"> <label style="width: 10%;">E-mail</label><input type="email"
+          [(ngModel)]="Email" style="margin-right: 5px" placeholder="Email"></div>
+
+      <button class="btn btn-primary" (click)="addUpdateEmp()" style="margin-right: 10px;width: 100px;">OK</button>
+      <button class="btn btn-warning" (click)="cancelClick()" style="width: 100px;">Cancel</button>
+    </div>
+  </ng-template>
+  <ng-template #normalTemplate>
+    <button class="btn btn-primary" (click)="addEmpClick()" style="margin-bottom: 10px;">Add Employee</button>
+    <table mat-table [(dataSource)]="emps" style="border: 1px solid #D7D7D7;">
+
+      <ng-container matColumnDef="firstname">
+        <th mat-header-cell *matHeaderCellDef class="P-LR10 borderTop" style="width: 10%;text-align-last: center;">
+          ชื่อ
+        </th>
+        <td mat-cell *matCellDef="let element" style="text-align-last:center;">
+          <mat-label>
+            {{ element.firstname }}
+          </mat-label>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastname">
+        <th mat-header-cell *matHeaderCellDef class="P-LR10 borderTop" style="width: 10%;text-align-last: center;">
+          สกุล
+        </th>
+        <td mat-cell *matCellDef="let element" style="text-align-last:center;">
+          <mat-label>
+            {{ element.lastname }}
+          </mat-label>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="birthday">
+        <th mat-header-cell *matHeaderCellDef class="P-LR10 borderTop" style="width: 10%;text-align-last: center;">
+          วันเกิด
+        </th>
+        <td mat-cell *matCellDef="let element" style="text-align-last:center;">
+          <mat-label>
+            {{ element.birthday }}
+          </mat-label>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef class="P-LR10 borderTop" style="width: 10%;text-align-last: center;">
+          เมล์
+        </th>
+        <td mat-cell *matCellDef="let element" style="text-align-last:center;">
+          <mat-label>
+            {{ element.email }}
+          </mat-label>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="_id">
+        <th mat-header-cell *matHeaderCellDef class="P-LR10 borderTop" style="width: 10%;text-align-last: center;">
+          การกระทำ
+        </th>
+        <td mat-cell *matCellDef="let element" style="text-align-last:center;">
+          <button class="btn btn-primary" style="margin-right: 5px;" (click)="updateEmpClick(element)">Update</button>
+          <button class="btn btn-danger" (click)="deleteEmp(element)">Delete</button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedEmps"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedEmps"></tr>
+    </table>
+    <button class="btn btn-warning" (click)="logoutClick()" style="margin-right: 10px;margin-top: 10px;">Logout</button>
+  </ng-template>
+
+</ng-template>
